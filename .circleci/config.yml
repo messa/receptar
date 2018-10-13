@@ -1,0 +1,22 @@
+version: 2
+jobs:
+
+  test_python36:
+    docker:
+    - image: circleci/python:3.6
+    steps: &test_steps
+    - checkout
+    - run: python3 -m pip install --user pytest
+    - run: python3 -m pytest -v tests
+
+  test_python37:
+    docker:
+    - image: circleci/python:3.7
+    steps: *test_steps
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    - test_python36
+    - test_python37
